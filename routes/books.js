@@ -5,6 +5,7 @@ const router = express.Router();
 const fs = require('fs');
 const Book = require('../models/book');
 const Author = require('../models/authors');
+const { ensureAuthenticated } = require('../config/auth');
 
 
 
@@ -37,7 +38,7 @@ const imageMineType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
 // }).single("cover");
 //All Authors Route
 
-router.get('/', async(req, res) => {
+router.get('/',ensureAuthenticated, async(req, res) => {
 
     let query = Book.find();
     if (req.query.title != null && req.query.title != '') {
